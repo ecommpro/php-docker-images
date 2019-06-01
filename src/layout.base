@@ -1,0 +1,9 @@
+FROM php:<?= $version['version'] ?>-alpine
+
+RUN set -ex \
+&& apk update \
+&& apk add $PHPIZE_DEPS git msmtp \
+&& <?= implode(" \\\n\\\n&& ", $extensions) ?> \
+&& apk del $PHPIZE_DEPS git\
+&& rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
+<?= $cli ?>

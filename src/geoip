@@ -1,0 +1,4 @@
+apk add geoip geoip-dev \
+	&& pecl install geoip-1.1.1 \
+	&& docker-php-ext-enable geoip \
+	&& apk del geoip-dev

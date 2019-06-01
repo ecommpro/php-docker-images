@@ -1,0 +1,1 @@
+printf "yes\nyes\n" | pecl install redis && docker-php-ext-enable redis

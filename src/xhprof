@@ -1,0 +1,8 @@
+(\
+	pecl install channel://pecl.php.net/xhprof-0.9.4 \
+	&& mkdir -p /opt/xhprof \
+	&& cd /opt/xhprof/ \	
+	&& pecl download channel://pecl.php.net/xhprof-0.9.4 \
+	&& tar --strip 1 -xzvf xhprof-0.9.4.tgz \
+	&& rm -fr xhprof-0.9.4.tgz \
+)

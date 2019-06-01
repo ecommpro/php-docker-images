@@ -1,0 +1,3 @@
+apk add libmcrypt-dev \
+	&& docker-php-ext-configure mcrypt --with-mcrypt \
+	&& docker-php-ext-install mcrypt
