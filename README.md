@@ -4,7 +4,28 @@ Welcome to the awesomic PHP docker images by [EcommPro SL](https://ecomm.pro/) |
 
 Ready to use with Magento, Magento 2, Wordpress and Laravel.
 
-Pre-built PHP extensions: bcmath, sockets, opcache, gd, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, xhprof, xdebug, uopz.
+Pre-built PHP extensions:
+    
+    bcmath
+    gd
+    geoip
+    igbinary
+    intl
+    mcrypt
+    memcached
+    mysqli
+    opcache
+    pdo_mysql
+    redis
+    sockets
+    xmlrw
+    xsl
+    zip
+
+    uopz (disabled by default)
+    xdebug (disabled by default)
+    xhprof (disabled by default)
+
 
 Two flavors: FPM and CLI.
 
