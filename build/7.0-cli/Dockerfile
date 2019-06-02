@@ -75,7 +75,7 @@ RUN set -ex \
 && rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
 ### CLI ###
 
-RUN apk --update add git zsh vim bash
+RUN apk --update --no-cache add git zsh vim bash mariadb-client
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work

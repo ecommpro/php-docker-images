@@ -23,7 +23,21 @@ Images:
 
 ## CLI
 
-CLI Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.
+CLI Tools included:
+
+    composer.phar
+    modman
+    n98-magerun.phar
+    n98-magerun2.phar
+    wp-cli.phar
+
+System packages included:
+    
+    bash
+    git
+    mariadb-client
+    vim
+    zsh
 
 ```
 docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.3-cli zsh
