@@ -29,7 +29,7 @@ Pre-built PHP extensions:
 
 Two flavors: FPM and CLI.
 
-Images:
+Images (available from <https://hub.docker.com/u/ecommpro>):
 
     ecommpro/php:5.6-cli
     ecommpro/php:5.6-fpm
