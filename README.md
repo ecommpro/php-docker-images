@@ -62,9 +62,45 @@ System packages included:
     mariadb-client
     vim
     zsh
+    msmtp
 
 ```
 docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.3-cli zsh
 ```
 
 Make PHP Great Again. Happy coding!
+
+## Container-friendly SMTP with MSMTP
+
+```
+echo -n "Enter SMTP password: " && read -s SMTP_PASSWORD
+export SMTP_PASSWORD
+
+docker run -ti --rm \
+    -e SMTP_PASSWORD \
+    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
+ecommpro/php:7.3-cli-ubuntu zsh
+```
+
+And then, inside the container:
+
+```
+php -r 'mail("manel@ecomm.pro", "Hey, again!", "Come on, again!", "From: hello@ecomm.pro");'
+```
+
+Et voilà.
+
+We've included the *msmtp* package in the containers, and set the `sendmail_path` PHP setting to `eval $SENDMAIL_COMMAND`. This way you can configure the mail sending command with environmente variables. **This is not secure for production environments and you should override this configuration by using, for example, mounted volumes**:
+
+```
+[docker] ➜  ~ cat /usr/local/etc/php/conf.d/msmtp.ini
+sendmail_path = "eval $SENDMAIL_COMMAND"
+```
+
+```
+docker run -ti --rm \
+    -v /dev/null:/usr/local/etc/php/conf.d/msmtp.ini
+    -e SMTP_PASSWORD \
+    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
+ecommpro/php:7.3-cli-ubuntu zsh
+```
