@@ -34,16 +34,31 @@ Two versions per flavor: FPM and CLI.
 
 Images (available from <https://hub.docker.com/u/ecommpro>):
 
-    ecommpro/php:5.6-cli
-    ecommpro/php:5.6-fpm
-    ecommpro/php:7.0-cli
-    ecommpro/php:7.0-fpm
-    ecommpro/php:7.1-cli
-    ecommpro/php:7.1-fpm
-    ecommpro/php:7.2-cli
-    ecommpro/php:7.2-fpm
-    ecommpro/php:7.3-cli
+Ubuntu:
+    
+    ecommpro/php:7.3-fpm-ubuntu
+    ecommpro/php:7.3-cli-ubuntu
+    ecommpro/php:7.2-fpm-ubuntu
+    ecommpro/php:7.2-cli-ubuntu
+    ecommpro/php:7.1-fpm-ubuntu
+    ecommpro/php:7.1-cli-ubuntu
+    ecommpro/php:7.0-fpm-ubuntu
+    ecommpro/php:7.0-cli-ubuntu
+    ecommpro/php:5.6-fpm-ubuntu
+    ecommpro/php:5.6-cli-ubuntu
+
+Alpine:
+
     ecommpro/php:7.3-fpm
+    ecommpro/php:7.3-cli
+    ecommpro/php:7.2-fpm
+    ecommpro/php:7.2-cli
+    ecommpro/php:7.1-fpm
+    ecommpro/php:7.1-cli
+    ecommpro/php:7.0-fpm
+    ecommpro/php:7.0-cli
+    ecommpro/php:5.6-fpm
+    ecommpro/php:5.6-cli
 
 ## CLI
 
