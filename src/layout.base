@@ -6,4 +6,9 @@ RUN set -ex \
 && <?= implode(" \\\n\\\n&& ", $extensions) ?> \
 && apk del $PHPIZE_DEPS git\
 && rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
+
+RUN echo '\
+sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
+>> /usr/local/etc/php/conf.d/msmtp.ini
+
 <?= $cli ?>

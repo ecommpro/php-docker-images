@@ -14,6 +14,10 @@ RUN set -ex \
 	&& docker-php-ext-install gd \
 	&& apk del freetype-dev libpng-dev libjpeg-turbo-dev \
 \
+&& apk add imagemagick-libs imagemagick-dev \
+	&& printf "\n" | pecl install imagick-3.4.4 \
+	&& apk del imagemagick-dev \
+\
 && apk add libmcrypt-dev \
 	&& pecl install channel://pecl.php.net/mcrypt-1.0.0 \
 \
@@ -72,3 +76,8 @@ RUN set -ex \
 && pecl install uopz-6.1.0 \
 && apk del $PHPIZE_DEPS git\
 && rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
+
+RUN echo '\
+sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
+>> /usr/local/etc/php/conf.d/msmtp.ini
+

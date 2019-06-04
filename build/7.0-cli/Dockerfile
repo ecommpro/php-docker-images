@@ -14,6 +14,10 @@ RUN set -ex \
 	&& docker-php-ext-install gd \
 	&& apk del freetype-dev libpng-dev libjpeg-turbo-dev \
 \
+&& apk add imagemagick-libs imagemagick-dev \
+	&& printf "\n" | pecl install imagick-3.4.4 \
+	&& apk del imagemagick-dev \
+\
 && apk add libmcrypt-dev \
 	&& docker-php-ext-configure mcrypt --with-mcrypt \
 	&& docker-php-ext-install mcrypt \
@@ -73,6 +77,11 @@ RUN set -ex \
 && pecl install uopz-5.0.2 \
 && apk del $PHPIZE_DEPS git\
 && rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
+
+RUN echo '\
+sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
+>> /usr/local/etc/php/conf.d/msmtp.ini
+
 ### CLI ###
 
 RUN apk --update --no-cache add git zsh vim bash mariadb-client
@@ -97,7 +106,7 @@ $'# \n'\
 $'# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
 $'# Based on the official php:7.0-cli-alpine docker image.\n'\
 $'# \n'\
-$'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, xhprof, xdebug, uopz.\n'\
+$'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, xhprof, xdebug, uopz.\n'\
 $'# \n'\
 $'# Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
 $'# \n'\

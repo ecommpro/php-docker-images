@@ -1,0 +1,3 @@
+apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
+	&& docker-php-ext-configure mcrypt --with-mcrypt \
+	&& docker-php-ext-install mcrypt

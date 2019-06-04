@@ -1,0 +1,3 @@
+apt-get install --no-install-recommends -y libicu57 libicu-dev \
+	&& docker-php-ext-install intl \
+	&& apt-get --purge remove -y libicu-dev

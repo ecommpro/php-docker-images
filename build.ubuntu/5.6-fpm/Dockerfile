@@ -1,58 +1,57 @@
-FROM php:5.6-fpm-alpine
-
+FROM php:5.6-fpm
 RUN set -ex \
-&& apk update \
-&& apk add $PHPIZE_DEPS git msmtp \
+&& apt-get update \
+&& apt-get install --no-install-recommends -y git msmtp \
 && docker-php-ext-install bcmath \
 \
 && docker-php-ext-install sockets \
 \
 && docker-php-ext-install opcache \
 \
-&& apk add freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+&& apt-get install --no-install-recommends -y libfreetype6 libfreetype6-dev libpng16-16 libpng-dev libjpeg62-turbo libjpeg62-turbo-dev libjpeg-dev \
 	&& docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-install gd \
-	&& apk del freetype-dev libpng-dev libjpeg-turbo-dev \
+	&& apt-get --purge remove -y libfreetype6-dev libpng-dev libjpeg62-turbo-dev libjpeg-dev \
 \
-&& apk add imagemagick-libs imagemagick-dev \
-	&& printf "\n" | pecl install imagick-3.4.4 \
-	&& apk del imagemagick-dev \
+&& apt-get install --no-install-recommends -y imagemagick libmagickwand-dev \
+	&& pecl install imagick-3.4.4 \
+	&& apt-get --purge remove -y libmagickwand-dev \
 \
-&& apk add libmcrypt-dev \
+&& apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
 	&& docker-php-ext-configure mcrypt --with-mcrypt \
 	&& docker-php-ext-install mcrypt \
 \
-&& apk add icu icu-dev \
+&& apt-get install --no-install-recommends -y libicu57 libicu-dev \
 	&& docker-php-ext-install intl \
-	&& apk del icu-dev \
+	&& apt-get --purge remove -y libicu-dev \
 \
-&& apk add libxml2-dev \
+&& apt-get install --no-install-recommends -y libxml2-dev \
 	&& docker-php-ext-install soap \
 	&& CFLAGS=-I/usr/src/php docker-php-ext-install xmlreader \
 	&& CFLAGS=-I/usr/src/php docker-php-ext-install xmlwriter \
-	&& apk del libxml2-dev \
+	&& apt-get --purge remove -y libxml2-dev \
 \
-&& apk add libxslt libxslt-dev \
+&& apt-get install --no-install-recommends -y libxslt1-dev libxslt1.1 \
 	&& docker-php-ext-install xsl \
-	&& apk del libxslt-dev \
+	&& apt-get --purge remove -y libxslt1-dev \
 \
 && pecl install igbinary-2.0.8 && docker-php-ext-enable igbinary \
 \
 && printf "yes\nyes\n" | pecl install redis && docker-php-ext-enable redis \
 \
-&& apk add libmemcached zlib-dev libmemcached-dev \
+&& apt-get install --no-install-recommends -y libmemcached11 libmemcachedutil2 zlib1g-dev libmemcached-dev \
 	&& printf "\n" | pecl install memcached-2.2.0 \
 	&& docker-php-ext-enable memcached \
-	&& apk del zlib-dev libmemcached-dev \
+	&& apt-get --purge remove -y zlib1g-dev libmemcached-dev \
 \
-&& apk add zlib-dev libzip-dev libzip \
+&& apt-get install --no-install-recommends -y zlib1g-dev libzip-dev libzip4 \
 	&& docker-php-ext-install zip \
-	&& apk del zlib-dev libzip-dev \
+	&& apt-get --purge remove -y zlib1g-dev libzip-dev \
 \
-&& apk add geoip geoip-dev \
+&& apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
 	&& pecl install geoip-1.1.1 \
 	&& docker-php-ext-enable geoip \
-	&& apk del geoip-dev \
+	&& apt-get --purge remove -y libgeoip-dev \
 \
 && docker-php-ext-install pdo_mysql \
 \
@@ -70,8 +69,10 @@ RUN set -ex \
 && pecl install xdebug-2.5.5 \
 \
 && pecl install uopz-2.0.7 \
-&& apk del $PHPIZE_DEPS git\
-&& rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
+&& apt-get --purge remove -y git \
+&& apt-get --purge autoremove -y \
+&& apt-get clean \
+&& rm -fr /usr/src
 
 RUN echo '\
 sendmail_path = "eval $SENDMAIL_COMMAND"\n'\

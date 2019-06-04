@@ -1,0 +1,16 @@
+FROM php:<?= $version['version'] ?>
+
+RUN set -ex \
+&& apt-get update \
+&& apt-get install --no-install-recommends -y git msmtp \
+&& <?= implode(" \\\n\\\n&& ", $extensions) ?> \
+&& apt-get --purge remove -y git \
+&& apt-get --purge autoremove -y \
+&& apt-get clean \
+&& rm -fr /usr/src
+
+RUN echo '\
+sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
+>> /usr/local/etc/php/conf.d/msmtp.ini
+
+<?= $cli ?>

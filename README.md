@@ -1,6 +1,6 @@
 # EcommPro PHP Docker Images
 
-Welcome to the awesomic PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP alpine docker images.**
+Welcome to the awesomic PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP docker images.**
 
 Ready to use with Magento, Magento 2, Wordpress and Laravel.
 
@@ -10,6 +10,7 @@ Pre-built PHP extensions:
     gd
     geoip
     igbinary
+    imagick
     intl
     mcrypt
     memcached
@@ -27,7 +28,9 @@ Pre-built PHP extensions:
     xhprof (disabled by default)
 
 
-Two flavors: FPM and CLI.
+Two flavors: Alpine and Ubuntu.
+
+Two versions per flavor: FPM and CLI.
 
 Images (available from <https://hub.docker.com/u/ecommpro>):
 

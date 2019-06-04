@@ -1,0 +1,3 @@
+apt-get install --no-install-recommends -y imagemagick libmagickwand-dev \
+	&& pecl install imagick-3.4.4 \
+	&& apt-get --purge remove -y libmagickwand-dev

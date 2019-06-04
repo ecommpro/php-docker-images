@@ -1,0 +1,4 @@
+apt-get install --no-install-recommends -y libmemcached11 libmemcachedutil2 zlib1g-dev libmemcached-dev \
+	&& printf "\n" | pecl install memcached \
+	&& docker-php-ext-enable memcached \
+	&& apt-get --purge remove -y zlib1g-dev libmemcached-dev \
