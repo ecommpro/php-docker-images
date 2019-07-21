@@ -27,6 +27,9 @@ Pre-built PHP extensions:
     xdebug (disabled by default)
     xhprof (disabled by default)
 
+    swoole (disabled by default)
+    rdkafka (disabled by default)
+
 
 Two flavors: Alpine and Ubuntu.
 
