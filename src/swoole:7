@@ -1,0 +1,1 @@
+apk add linux-headers && pecl install swoole && apk del linux-headers

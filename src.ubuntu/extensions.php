@@ -18,6 +18,9 @@ return [
     'pdo_mysql',
     'mysqli',
 
+    'rdkafka',
+    'swoole',
+
     // Debug and profiling
     'xhprof',
     'xdebug',

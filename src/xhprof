@@ -5,4 +5,5 @@
 	&& pecl download channel://pecl.php.net/xhprof-0.9.4 \
 	&& tar --strip 1 -xzvf xhprof-0.9.4.tgz \
 	&& rm -fr xhprof-0.9.4.tgz \
+	&& docker-php-ext-enable xhprof \
 )

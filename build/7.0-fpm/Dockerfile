@@ -38,7 +38,7 @@ RUN set -ex \
 \
 && pecl install igbinary-3.0.1 && docker-php-ext-enable igbinary \
 \
-&& printf "yes\nyes\n" | pecl install redis && docker-php-ext-enable redis \
+&& printf "yes\nyes\n" | pecl install redis-5.0.1 && docker-php-ext-enable redis \
 \
 && apk add libmemcached zlib-dev libmemcached-dev \
 	&& printf "\n" | pecl install memcached \
@@ -58,6 +58,10 @@ RUN set -ex \
 \
 && docker-php-ext-install mysqli \
 \
+&& apk add librdkafka librdkafka-dev && pecl install rdkafka-3.1.2 && apk del librdkafka-dev \
+\
+&& apk add linux-headers && pecl install swoole && docker-php-ext-enable swoole && apk del linux-headers \
+\
 && (\
 	mkdir -p /opt \
 	&& cd /opt \
@@ -70,9 +74,10 @@ RUN set -ex \
 	&& ./configure --with-php-config=/usr/local/bin/php-config \
 	&& make \
 	&& make install \
+	&& docker-php-ext-enable tideways_xhprof \
 ) \
 \
-&& pecl install xdebug \
+&& pecl install xdebug && docker-php-ext-enable xdebug \
 \
 && pecl install uopz-5.0.2 \
 && apk del $PHPIZE_DEPS git\

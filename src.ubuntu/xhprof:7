@@ -10,4 +10,5 @@
 	&& ./configure --with-php-config=/usr/local/bin/php-config \
 	&& make \
 	&& make install \
+	&& docker-php-ext-enable tideways_xhprof \
 )

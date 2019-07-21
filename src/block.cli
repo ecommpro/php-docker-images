@@ -1,6 +1,6 @@
 ### CLI ###
 
-RUN apk --update --no-cache add git zsh vim bash mariadb-client
+RUN apk --update --no-cache add git zsh vim bash mariadb-client unzip
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work

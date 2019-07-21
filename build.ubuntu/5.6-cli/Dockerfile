@@ -37,7 +37,7 @@ RUN set -ex \
 \
 && pecl install igbinary-2.0.8 && docker-php-ext-enable igbinary \
 \
-&& printf "yes\nyes\n" | pecl install redis && docker-php-ext-enable redis \
+&& printf "yes\nyes\n" | pecl install redis-4.3.0 && docker-php-ext-enable redis \
 \
 && apt-get install --no-install-recommends -y libmemcached11 libmemcachedutil2 zlib1g-dev libmemcached-dev \
 	&& printf "\n" | pecl install memcached-2.2.0 \
@@ -57,6 +57,12 @@ RUN set -ex \
 \
 && docker-php-ext-install mysqli \
 \
+&& apt-get install --no-install-recommends -y librdkafka1 librdkafka-dev \
+	&& pecl install rdkafka-3.1.2 \
+	&& apt-get --purge remove -y librdkafka-dev \
+\
+&& pecl install swoole-2.0.11 \
+\
 && (\
 	pecl install channel://pecl.php.net/xhprof-0.9.4 \
 	&& mkdir -p /opt/xhprof \
@@ -64,9 +70,10 @@ RUN set -ex \
 	&& pecl download channel://pecl.php.net/xhprof-0.9.4 \
 	&& tar --strip 1 -xzvf xhprof-0.9.4.tgz \
 	&& rm -fr xhprof-0.9.4.tgz \
+	&& docker-php-ext-enable xhprof \
 ) \
 \
-&& pecl install xdebug-2.5.5 \
+&& pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug \
 \
 && pecl install uopz-2.0.7 \
 && apt-get --purge remove -y git \
@@ -80,7 +87,7 @@ sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
 
 ### CLI ###
 
-RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client && apt-get clean
+RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping && apt-get clean
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work
@@ -103,7 +110,7 @@ RUN echo \
 '# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
 '# Based on the official php:5.6-cli docker image.\n'\
 '# \n'\
-'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, xhprof, xdebug, uopz.\n'\
+'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
 '# \n'\
 '# Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
 '# \n'\
