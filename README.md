@@ -83,7 +83,7 @@ System packages included:
     msmtp
 
 ```
-docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.3-cli zsh
+docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.3-cli-debian zsh
 ```
 
 Make PHP Great Again. Happy coding!
