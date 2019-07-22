@@ -1,4 +1,4 @@
-FROM php:7.2-cli-alpine
+FROM php:7.1-fpm-alpine
 
 RUN set -ex \
 && apk update \
@@ -19,7 +19,7 @@ RUN set -ex \
 	&& apk del imagemagick-dev \
 \
 && apk add libmcrypt-dev \
-	&& pecl install channel://pecl.php.net/mcrypt-1.0.2 \
+	&& pecl install channel://pecl.php.net/mcrypt-1.0.0 \
 \
 && apk add icu icu-dev \
 	&& docker-php-ext-install intl \
@@ -59,7 +59,7 @@ RUN set -ex \
 \
 && apk add librdkafka librdkafka-dev && pecl install rdkafka-3.1.2 && apk del librdkafka-dev \
 \
-&& apk add linux-headers && pecl install swoole && docker-php-ext-enable swoole && apk del linux-headers \
+&& apk add linux-headers && pecl install swoole && apk del linux-headers \
 \
 && (\
 	mkdir -p /opt \
@@ -86,54 +86,3 @@ RUN echo '\
 sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
 >> /usr/local/etc/php/conf.d/msmtp.ini
 
-### CLI ###
-
-RUN apk --update --no-cache add git zsh vim bash mariadb-client unzip
-
-RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
-WORKDIR /work
-
-RUN git clone git://github.com/robbyrussell/oh-my-zsh.git /usr/local/share/oh-my-zsh
-
-COPY cli-tools /usr/local/bin
-
-RUN mkdir -p /usr/local/share/composer
-RUN COMPOSER_HOME=/usr/local/share/composer && ( \
-  composer global require hirak/prestissimo \
-  && composer clearcache \
-  && find /usr/local/share/composer -type d -exec chmod 777 {} \; \
-  && find /usr/local/share/composer -type f -exec chmod 666 {} \; \
-)
-
-RUN echo $'\n'\
-$'# \n'\
-$'# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
-$'# Based on the official php:7.2-cli-alpine docker image.\n'\
-$'# \n'\
-$'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
-$'# \n'\
-$'# Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
-$'# \n'\
-$'# Make PHP Great Again. Happy coding!\n'\
-$'# \n'\
-$'# Check <https://github.com/ecommpro/php-docker-images/blob/master/README.md> for more information.\n'\
-$'# \n'\
-$''\
->> /etc/motd.ecommpro
-
-RUN echo $'\
-cat /etc/motd.ecommpro\n\
-export HOME=/work\n\
-export COMPOSER_HOME=/usr/local/share/composer\n\
-export COMPOSER_CACHE_DIR=~/.local/composer/cache\n\
-export PATH=$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n\
-export ZSH=/usr/local/share/oh-my-zsh\n\
-ZSH_THEME="robbyrussell"\n\
-plugins=(\n\
-  git\n\
-)\n\
-ZDOTDIR=/local\n\
-HISTFILE=${ZDOTDIR}/.zsh_history\n\
-source $ZSH/oh-my-zsh.sh\n\
-export PS1="[docker] $PS1"\n'\
->> /etc/zsh/zshrc

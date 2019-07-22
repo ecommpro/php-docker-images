@@ -31,37 +31,37 @@ Pre-built PHP extensions:
     rdkafka (disabled by default)
 
 
-Two flavors: Alpine and Ubuntu.
+Two flavors: Debian and Alpine.
 
 Two versions per flavor: FPM and CLI.
 
 Images (available from <https://hub.docker.com/u/ecommpro>):
 
-Ubuntu:
+Debian:
     
-    ecommpro/php:7.3-fpm-ubuntu
-    ecommpro/php:7.3-cli-ubuntu
-    ecommpro/php:7.2-fpm-ubuntu
-    ecommpro/php:7.2-cli-ubuntu
-    ecommpro/php:7.1-fpm-ubuntu
-    ecommpro/php:7.1-cli-ubuntu
-    ecommpro/php:7.0-fpm-ubuntu
-    ecommpro/php:7.0-cli-ubuntu
-    ecommpro/php:5.6-fpm-ubuntu
-    ecommpro/php:5.6-cli-ubuntu
+    ecommpro/php:7.3-fpm-debian
+    ecommpro/php:7.3-cli-debian
+    ecommpro/php:7.2-fpm-debian
+    ecommpro/php:7.2-cli-debian
+    ecommpro/php:7.1-fpm-debian
+    ecommpro/php:7.1-cli-debian
+    ecommpro/php:7.0-fpm-debian
+    ecommpro/php:7.0-cli-debian
+    ecommpro/php:5.6-fpm-debian
+    ecommpro/php:5.6-cli-debian
 
 Alpine:
 
-    ecommpro/php:7.3-fpm
-    ecommpro/php:7.3-cli
-    ecommpro/php:7.2-fpm
-    ecommpro/php:7.2-cli
-    ecommpro/php:7.1-fpm
-    ecommpro/php:7.1-cli
-    ecommpro/php:7.0-fpm
-    ecommpro/php:7.0-cli
-    ecommpro/php:5.6-fpm
-    ecommpro/php:5.6-cli
+    ecommpro/php:7.3-fpm-alpine
+    ecommpro/php:7.3-cli-alpine
+    ecommpro/php:7.2-fpm-alpine
+    ecommpro/php:7.2-cli-alpine
+    ecommpro/php:7.1-fpm-alpine
+    ecommpro/php:7.1-cli-alpine
+    ecommpro/php:7.0-fpm-alpine
+    ecommpro/php:7.0-cli-alpine
+    ecommpro/php:5.6-fpm-alpine
+    ecommpro/php:5.6-cli-alpine
 
 ## CLI
 
@@ -97,7 +97,7 @@ export SMTP_PASSWORD
 docker run -ti --rm \
     -e SMTP_PASSWORD \
     -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.3-cli-ubuntu zsh
+ecommpro/php:7.3-cli-debian zsh
 ```
 
 And then, inside the container:
@@ -120,5 +120,5 @@ docker run -ti --rm \
     -v /dev/null:/usr/local/etc/php/conf.d/msmtp.ini
     -e SMTP_PASSWORD \
     -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.3-cli-ubuntu zsh
+ecommpro/php:7.3-cli-debian zsh
 ```

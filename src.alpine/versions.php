@@ -30,4 +30,12 @@ return [
     [
         'version' => '7.3-fpm',
     ],
+    /*
+    [
+        'version' => '7.4-rc-cli',
+    ],
+    [
+        'version' => '7.4-rc-fpm',
+    ],
+    */
 ];

@@ -1,7 +1,7 @@
 <?php
-$versions = include(__DIR__ . '/src/versions.php');
-$buildDir = __DIR__ . '/build';
-$srcDir = __DIR__ . '/src';
+$versions = include(__DIR__ . '/src.alpine/versions.php');
+$buildDir = __DIR__ . '/build.alpine';
+$srcDir = __DIR__ . '/src.alpine';
 
 $tools = array_map(function($file) {
     return pathinfo($file, PATHINFO_BASENAME);
@@ -9,10 +9,11 @@ $tools = array_map(function($file) {
     return ! is_link($file) && strpos($file, 'update-cli-tools') === false;
 }));
 
+$allExtensions = include($srcDir . '/extensions.php');
+
 foreach($versions as $version) {
     $extensions = [];
-
-    foreach($version['extensions'] as $file) {
+    foreach($allExtensions as $file) {
         $candidates = array_map(function($file) {
             return pathinfo($file, PATHINFO_BASENAME);
         }, array_merge(glob($srcDir . '/' . $file), glob($srcDir . '/' . "$file:*")));

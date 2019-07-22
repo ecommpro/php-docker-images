@@ -1,4 +1,4 @@
-FROM php:7.3-cli-alpine
+FROM php:7.0-cli-alpine
 
 RUN set -ex \
 && apk update \
@@ -19,7 +19,8 @@ RUN set -ex \
 	&& apk del imagemagick-dev \
 \
 && apk add libmcrypt-dev \
-	&& pecl install channel://pecl.php.net/mcrypt-1.0.2 \
+	&& docker-php-ext-configure mcrypt --with-mcrypt \
+	&& docker-php-ext-install mcrypt \
 \
 && apk add icu icu-dev \
 	&& docker-php-ext-install intl \
@@ -59,7 +60,7 @@ RUN set -ex \
 \
 && apk add librdkafka librdkafka-dev && pecl install rdkafka-3.1.2 && apk del librdkafka-dev \
 \
-&& apk add linux-headers && pecl install swoole && docker-php-ext-enable swoole && apk del linux-headers \
+&& apk add linux-headers && pecl install swoole && apk del linux-headers \
 \
 && (\
 	mkdir -p /opt \
@@ -78,7 +79,7 @@ RUN set -ex \
 \
 && pecl install xdebug && docker-php-ext-enable xdebug \
 \
-&& pecl install uopz-6.1.0 \
+&& pecl install uopz-5.0.2 \
 && apk del $PHPIZE_DEPS git\
 && rm -fr /var/cache/apk/* /usr/src/* /usr/local/bin/phpdbg /usr/local/bin/php-cgi
 
@@ -108,7 +109,7 @@ RUN COMPOSER_HOME=/usr/local/share/composer && ( \
 RUN echo $'\n'\
 $'# \n'\
 $'# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
-$'# Based on the official php:7.3-cli-alpine docker image.\n'\
+$'# Based on the official php:7.0-cli-alpine docker image.\n'\
 $'# \n'\
 $'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
 $'# \n'\

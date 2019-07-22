@@ -60,7 +60,7 @@ RUN set -ex \
 \
 && apk add librdkafka librdkafka-dev && pecl install rdkafka-3.1.2 && apk del librdkafka-dev \
 \
-&& apk add linux-headers && pecl install swoole-2.0.11 && docker-php-ext-enable swoole && apk del linux-headers \
+&& apk add linux-headers && pecl install swoole-2.0.11 && apk del linux-headers \
 \
 && (\
 	pecl install channel://pecl.php.net/xhprof-0.9.4 \

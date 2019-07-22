@@ -1,6 +1,6 @@
 <?php
-$buildDir = __DIR__ . '/build.ubuntu';
-$srcDir = __DIR__ . '/src.ubuntu';
+$buildDir = __DIR__ . '/build.debian';
+$srcDir = __DIR__ . '/src.debian';
 $versions = include($srcDir . '/versions.php');
 
 $tools = array_map(function($file) {
