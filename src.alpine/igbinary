@@ -1,1 +1,0 @@
-pecl install igbinary-2.0.8 && docker-php-ext-enable igbinary

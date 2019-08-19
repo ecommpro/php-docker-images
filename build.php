@@ -1,7 +1,7 @@
 <?php
-$versions = include(__DIR__ . '/src.alpine/versions.php');
-$buildDir = __DIR__ . '/build.alpine';
-$srcDir = __DIR__ . '/src.alpine';
+$buildDir = __DIR__ . '/build';
+$srcDir = __DIR__ . '/src';
+$versions = include($srcDir . '/versions.php');
 
 $tools = array_map(function($file) {
     return pathinfo($file, PATHINFO_BASENAME);
@@ -21,7 +21,7 @@ foreach($versions as $version) {
         usort($candidates, 'version_compare');
         $max = $file . ':' . $version['version'];
         $max = preg_replace('#(-cli|-fpm)$#', '', $max);
-        
+
         do {
             $candidate = array_pop($candidates);
         } while($candidate && version_compare($candidate, $max, 'gt'));
@@ -38,7 +38,7 @@ foreach($versions as $version) {
         include($srcDir . '/' . 'block.cli');
     }
     $cli = ob_get_clean();
-    
+
     ob_start();
     include $srcDir . '/' . 'layout.base';
     $contents = ob_get_clean();
@@ -47,7 +47,7 @@ foreach($versions as $version) {
     if (!file_exists($toDir)) {
         mkdir($toDir, 0755, true);
     }
-    
+
     file_put_contents($toDir . '/Dockerfile', $contents);
     echo "$toDir created.\n";
 }

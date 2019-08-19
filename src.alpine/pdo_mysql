@@ -1,1 +1,0 @@
-docker-php-ext-install pdo_mysql

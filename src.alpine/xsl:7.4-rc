@@ -1,3 +1,0 @@
-apk add libxslt libxslt-dev libgcrypt libgcrypt-dev \
-	&& docker-php-ext-install xsl \
-	&& apk del libxslt-dev libgcrypt-dev

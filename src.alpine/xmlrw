@@ -1,5 +1,0 @@
-apk add libxml2-dev \
-	&& docker-php-ext-install soap \
-	&& CFLAGS=-I/usr/src/php docker-php-ext-install xmlreader \
-	&& CFLAGS=-I/usr/src/php docker-php-ext-install xmlwriter \
-	&& apk del libxml2-dev

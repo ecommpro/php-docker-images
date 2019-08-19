@@ -1,3 +1,0 @@
-apk add imagemagick-libs imagemagick-dev \
-	&& printf "\n" | pecl install imagick-3.4.4 \
-	&& apk del imagemagick-dev

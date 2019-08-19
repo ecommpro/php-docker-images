@@ -1,3 +1,0 @@
-apk add zlib-dev libzip-dev libzip \
-	&& docker-php-ext-install zip \
-	&& apk del zlib-dev libzip-dev

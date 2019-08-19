@@ -1,3 +1,0 @@
-apk add icu icu-dev \
-	&& docker-php-ext-install intl \
-	&& apk del icu-dev

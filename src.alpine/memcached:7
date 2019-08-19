@@ -1,4 +1,0 @@
-apk add libmemcached zlib-dev libmemcached-dev \
-	&& printf "\n" | pecl install memcached \
-	&& docker-php-ext-enable memcached \
-	&& apk del zlib-dev libmemcached-dev \

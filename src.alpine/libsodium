@@ -1,3 +1,0 @@
-apk add libsodium libsodium-dev \
-	&& pecl install libsodium-1.0.7 \
-	&& apk del libsodium-dev
