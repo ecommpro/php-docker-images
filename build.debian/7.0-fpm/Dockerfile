@@ -21,6 +21,10 @@ RUN set -ex \
 	&& docker-php-ext-configure mcrypt --with-mcrypt \
 	&& docker-php-ext-install mcrypt \
 \
+&& apt-get install --no-install-recommends -y libsodium18 libsodium-dev \
+	&& pecl install libsodium-2.0.21 \
+	&& apt-get --purge remove -y libsodium-dev \
+\
 && apt-get install --no-install-recommends -y libicu57 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
@@ -61,7 +65,9 @@ RUN set -ex \
 	&& pecl install rdkafka-3.1.2 \
 	&& apt-get --purge remove -y librdkafka-dev \
 \
-&& pecl install swoole \
+&& apt-get install --no-install-recommends -y libpq5 libpq-dev openssl libssl-dev \
+	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.3.6 \
+	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
 	mkdir -p /opt \

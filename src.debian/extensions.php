@@ -6,6 +6,7 @@ return [
     'gd',
     'imagick',
     'mcrypt',
+    'libsodium',
     'intl',
     'xmlrw',
     'xsl',

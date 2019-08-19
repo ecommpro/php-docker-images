@@ -21,6 +21,10 @@ RUN set -ex \
 	&& docker-php-ext-configure mcrypt --with-mcrypt \
 	&& docker-php-ext-install mcrypt \
 \
+&& apt-get install --no-install-recommends -y libsodium18 libsodium-dev \
+	&& pecl install libsodium-1.0.7 \
+	&& apt-get --purge remove -y libsodium-dev \
+\
 && apt-get install --no-install-recommends -y libicu57 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
@@ -110,7 +114,7 @@ RUN echo \
 '# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
 '# Based on the official php:5.6-cli docker image.\n'\
 '# \n'\
-'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
+'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
 '# \n'\
 '# Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
 '# \n'\

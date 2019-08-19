@@ -20,6 +20,10 @@ RUN set -ex \
 && apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
 	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.2 \
 \
+&& apt-get install --no-install-recommends -y libsodium18 libsodium-dev \
+	&& pecl install libsodium-2.0.21 \
+	&& apt-get --purge remove -y libsodium-dev \
+\
 && apt-get install --no-install-recommends -y libicu57 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
@@ -60,7 +64,9 @@ RUN set -ex \
 	&& pecl install rdkafka-3.1.2 \
 	&& apt-get --purge remove -y librdkafka-dev \
 \
-&& pecl install swoole \
+&& apt-get install --no-install-recommends -y libpq5 libpq-dev openssl libssl-dev \
+	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.4.3 \
+	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
 	mkdir -p /opt \
