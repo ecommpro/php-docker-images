@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:7.4-cli
 RUN set -ex \
 && apt-get update \
 && apt-get install --no-install-recommends -y git msmtp \
@@ -9,7 +9,7 @@ RUN set -ex \
 && docker-php-ext-install opcache \
 \
 && apt-get install --no-install-recommends -y libfreetype6 libfreetype6-dev libpng16-16 libpng-dev libjpeg62-turbo libjpeg62-turbo-dev libjpeg-dev \
-	&& docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd --enable-gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
 	&& docker-php-ext-install gd \
 	&& apt-get --purge remove -y libfreetype6-dev libpng-dev libjpeg62-turbo-dev libjpeg-dev \
 \
@@ -18,14 +18,13 @@ RUN set -ex \
 	&& apt-get --purge remove -y libmagickwand-dev \
 \
 && apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
-	&& docker-php-ext-configure mcrypt --with-mcrypt \
-	&& docker-php-ext-install mcrypt \
+	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.3 \
 \
-&& apt-get install --no-install-recommends -y libsodium18 libsodium-dev \
+&& apt-get install --no-install-recommends -y libsodium23 libsodium-dev \
 	&& pecl install libsodium-2.0.21 \
 	&& apt-get --purge remove -y libsodium-dev \
 \
-&& apt-get install --no-install-recommends -y libicu57 libicu-dev \
+&& apt-get install --no-install-recommends -y libicu63 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
 \
@@ -66,7 +65,7 @@ RUN set -ex \
 	&& apt-get --purge remove -y librdkafka-dev \
 \
 && apt-get install --no-install-recommends -y libpq5 libpq-dev openssl libssl-dev \
-	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.3.6 \
+	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.4.3 \
 	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
@@ -86,7 +85,7 @@ RUN set -ex \
 \
 && pecl install xdebug-2.9.0 && docker-php-ext-enable xdebug \
 \
-&& pecl install uopz-5.0.2 \
+&& pecl install uopz-6.1.0 \
 && apt-get --purge remove -y git \
 && apt-get --purge autoremove -y \
 && apt-get clean \
@@ -96,3 +95,55 @@ RUN echo '\
 sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
 >> /usr/local/etc/php/conf.d/msmtp.ini
 
+### CLI ###
+
+RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping && apt-get clean
+
+RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
+WORKDIR /work
+
+RUN git clone git://github.com/robbyrussell/oh-my-zsh.git /usr/local/share/oh-my-zsh
+
+COPY cli-tools /usr/local/bin
+
+RUN mkdir -p /usr/local/share/composer
+RUN COMPOSER_HOME=/usr/local/share/composer && ( \
+  composer global require hirak/prestissimo \
+  && composer clearcache \
+  && find /usr/local/share/composer -type d -exec chmod 777 {} \; \
+  && find /usr/local/share/composer -type f -exec chmod 666 {} \; \
+)
+
+RUN echo \
+'\n'\
+'# \n'\
+'# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
+'# Based on the official php:7.4-cli docker image.\n'\
+'# \n'\
+'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
+'# \n'\
+'# Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
+'# \n'\
+'# Make PHP Great Again. Happy coding!\n'\
+'# \n'\
+'# Check <https://github.com/ecommpro/php-docker-images/blob/master/README.md> for more information.\n'\
+'# \n'\
+''\
+>> /etc/motd.ecommpro
+
+RUN echo '\
+cat /etc/motd.ecommpro\n\
+export HOME=/work\n\
+export COMPOSER_HOME=/usr/local/share/composer\n\
+export COMPOSER_CACHE_DIR=~/.local/composer/cache\n\
+export PATH=$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n\
+export ZSH=/usr/local/share/oh-my-zsh\n\
+ZSH_THEME="robbyrussell"\n\
+plugins=(\n\
+  git\n\
+)\n\
+ZDOTDIR=/local\n\
+HISTFILE=${ZDOTDIR}/.zsh_history\n\
+source $ZSH/oh-my-zsh.sh\n\
+export PS1="[docker] $PS1"\n'\
+>> /etc/zsh/zshrc

@@ -84,7 +84,7 @@ RUN set -ex \
 	&& docker-php-ext-enable tideways_xhprof \
 ) \
 \
-&& pecl install xdebug-2.7.2 && docker-php-ext-enable xdebug \
+&& pecl install xdebug-2.9.0 && docker-php-ext-enable xdebug \
 \
 && pecl install uopz-5.0.2 \
 && apt-get --purge remove -y git \

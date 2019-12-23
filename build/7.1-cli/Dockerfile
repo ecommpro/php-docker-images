@@ -20,11 +20,11 @@ RUN set -ex \
 && apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
 	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.0 \
 \
-&& apt-get install --no-install-recommends -y libsodium18 libsodium-dev \
+&& apt-get install --no-install-recommends -y libsodium23 libsodium-dev \
 	&& pecl install libsodium-2.0.21 \
 	&& apt-get --purge remove -y libsodium-dev \
 \
-&& apt-get install --no-install-recommends -y libicu57 libicu-dev \
+&& apt-get install --no-install-recommends -y libicu63 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
 \
@@ -83,7 +83,7 @@ RUN set -ex \
 	&& docker-php-ext-enable tideways_xhprof \
 ) \
 \
-&& pecl install xdebug-2.7.2 && docker-php-ext-enable xdebug \
+&& pecl install xdebug-2.9.0 && docker-php-ext-enable xdebug \
 \
 && pecl install uopz-6.1.0 \
 && apt-get --purge remove -y git \

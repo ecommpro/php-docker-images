@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:7.4-fpm
 RUN set -ex \
 && apt-get update \
 && apt-get install --no-install-recommends -y git msmtp \
@@ -9,7 +9,7 @@ RUN set -ex \
 && docker-php-ext-install opcache \
 \
 && apt-get install --no-install-recommends -y libfreetype6 libfreetype6-dev libpng16-16 libpng-dev libjpeg62-turbo libjpeg62-turbo-dev libjpeg-dev \
-	&& docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd --enable-gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
 	&& docker-php-ext-install gd \
 	&& apt-get --purge remove -y libfreetype6-dev libpng-dev libjpeg62-turbo-dev libjpeg-dev \
 \
@@ -18,14 +18,13 @@ RUN set -ex \
 	&& apt-get --purge remove -y libmagickwand-dev \
 \
 && apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
-	&& docker-php-ext-configure mcrypt --with-mcrypt \
-	&& docker-php-ext-install mcrypt \
+	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.3 \
 \
-&& apt-get install --no-install-recommends -y libsodium18 libsodium-dev \
+&& apt-get install --no-install-recommends -y libsodium23 libsodium-dev \
 	&& pecl install libsodium-2.0.21 \
 	&& apt-get --purge remove -y libsodium-dev \
 \
-&& apt-get install --no-install-recommends -y libicu57 libicu-dev \
+&& apt-get install --no-install-recommends -y libicu63 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
 \
@@ -66,7 +65,7 @@ RUN set -ex \
 	&& apt-get --purge remove -y librdkafka-dev \
 \
 && apt-get install --no-install-recommends -y libpq5 libpq-dev openssl libssl-dev \
-	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.3.6 \
+	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.4.3 \
 	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
@@ -86,7 +85,7 @@ RUN set -ex \
 \
 && pecl install xdebug-2.9.0 && docker-php-ext-enable xdebug \
 \
-&& pecl install uopz-5.0.2 \
+&& pecl install uopz-6.1.0 \
 && apt-get --purge remove -y git \
 && apt-get --purge autoremove -y \
 && apt-get clean \
