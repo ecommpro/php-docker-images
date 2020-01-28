@@ -2,6 +2,8 @@
 
 **NOTICE: dropped support for Alpine-based containers.**
 
+**NOTICE: tags ending with `-debian` will be deprecated. Please, use the `-fpm` and `-cli` ones (based on debian).**
+
 Welcome to the awesomic PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP Debian docker images.**
 
 Ready to use with Magento, Magento 2, Wordpress and Laravel.
@@ -105,4 +107,23 @@ docker run -ti --rm \
     -e SMTP_PASSWORD \
     -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
 ecommpro/php:7.3-cli zsh
+```
+
+Example using SendGrid:
+
+```
+echo -n "Enter SMTP password: " && read -s SMTP_PASSWORD
+export SMTP_PASSWORD
+
+docker run -ti --rm \
+    -v /dev/null:/usr/local/etc/php/conf.d/msmtp.ini
+    -e SMTP_PASSWORD \
+    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=smtp.sendgrid.net --protocol=smtp --auth=on --user=apikey --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
+ecommpro/php:7.4-cli zsh
+```
+
+And then, inside the container:
+
+```
+php -r 'mail("manel@ecomm.pro", "Hey, again (from SendGrid)!", "Come on, again (from SendGrid)!", "From: mysender@mydomain.tld");'
 ```

@@ -1,0 +1,31 @@
+function join_by { local IFS="$1"; shift; echo "$*"; }
+
+function curenv {
+    case "$PRO_ENV" in
+    "production") PRO_COLOR="%{$bg[red]%}%{$fg_bold[white]%}" ;;
+    "staging") PRO_COLOR="%{$fg[yellow]%}" ;;
+    "testing") PRO_COLOR="%{$fg[yellow]%}" ;;
+    "pre") PRO_COLOR="%{$fg[yellow]%}" ;;
+    "preproduction") PRO_COLOR="%{$fg[yellow]%}" ;;
+    *) PRO_COLOR="%{$fg[green]%}" ;;
+    esac
+
+    echo $(join_by \| ${PRO_ENV:+"${PRO_COLOR}$PRO_ENV%{$reset_color%}"} ${PRO_PRJ:+"$PRO_PRJ"})
+}
+
+NEWLINE=$'\n'
+
+cat /etc/motd.ecommpro
+export HOME=/work
+export COMPOSER_HOME=/usr/local/share/composer
+export COMPOSER_CACHE_DIR=~/.local/composer/cache
+export PATH=$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export ZSH=/usr/local/share/oh-my-zsh
+ZSH_THEME="robbyrussell"
+plugins=(
+  git
+)
+ZDOTDIR=/local
+HISTFILE=${ZDOTDIR}/.zsh_history
+source $ZSH/oh-my-zsh.sh
+export PS1='$(curenv) %(?:%{%}> :%{%}> ) %{$fg[cyan]%}%~%{$reset_color%}${NEWLINE}%{%}➜ $(git_prompt_info)'

@@ -132,19 +132,4 @@ RUN echo \
 ''\
 >> /etc/motd.ecommpro
 
-RUN echo '\
-cat /etc/motd.ecommpro\n\
-export HOME=/work\n\
-export COMPOSER_HOME=/usr/local/share/composer\n\
-export COMPOSER_CACHE_DIR=~/.local/composer/cache\n\
-export PATH=$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n\
-export ZSH=/usr/local/share/oh-my-zsh\n\
-ZSH_THEME="robbyrussell"\n\
-plugins=(\n\
-  git\n\
-)\n\
-ZDOTDIR=/local\n\
-HISTFILE=${ZDOTDIR}/.zsh_history\n\
-source $ZSH/oh-my-zsh.sh\n\
-export PS1="[docker] $PS1"\n'\
->> /etc/zsh/zshrc
+COPY etc/zshrc /etc/zsh/zshrc
