@@ -9,8 +9,9 @@ function curenv {
     "preproduction") PRO_COLOR="%{$fg[yellow]%}" ;;
     *) PRO_COLOR="%{$fg[green]%}" ;;
     esac
-
-    echo $(join_by \| ${PRO_ENV:+"${PRO_COLOR}$PRO_ENV%{$reset_color%}"} ${PRO_PRJ:+"$PRO_PRJ"})
+    
+    CURENV=$(join_by \| ${PRO_ENV:+"${PRO_COLOR}$PRO_ENV%{$reset_color%}"} ${PRO_PRJ:+"$PRO_PRJ"})
+    echo ${CURENV%%*( )}
 }
 
 NEWLINE=$'\n'
@@ -28,4 +29,4 @@ plugins=(
 ZDOTDIR=/local
 HISTFILE=${ZDOTDIR}/.zsh_history
 source $ZSH/oh-my-zsh.sh
-export PS1='$(curenv) %(?:%{%}> :%{%}> ) %{$fg[cyan]%}%~%{$reset_color%}${NEWLINE}%{%}➜ $(git_prompt_info)'
+export PS1='$(curenv)%(?:%{%}>:%{%}>) %{$fg[cyan]%}%~%{$reset_color%}${NEWLINE}%{%}[%n@docker] ➜ $(git_prompt_info)'
