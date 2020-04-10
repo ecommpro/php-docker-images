@@ -34,6 +34,12 @@ curl -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/pha
     && ln -sf wp-cli.phar wp \
     && ln -sf wp-cli.phar wp-cli
 
+# jq
+
+curl -o jq -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
+    && chmod +x jq
+
+
 tar --exclude=update.sh -czf ../cli-tools.tgz .
 
 )

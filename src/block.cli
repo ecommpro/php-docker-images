@@ -1,6 +1,6 @@
 ### CLI ###
 
-RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping && apt-get clean
+RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping procps && apt-get clean
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work
@@ -35,3 +35,4 @@ RUN echo \
 >> /etc/motd.ecommpro
 
 COPY etc/zshrc /etc/zsh/zshrc
+COPY etc/zshenv /etc/zsh/zshenv

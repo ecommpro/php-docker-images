@@ -97,7 +97,7 @@ sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
 
 ### CLI ###
 
-RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping && apt-get clean
+RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping procps && apt-get clean
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work
@@ -122,7 +122,7 @@ RUN echo \
 '# \n'\
 '# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
 '# \n'\
-'# Tools included: composer.phar, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
+'# Tools included: composer.phar, jq, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
 '# \n'\
 '# Make PHP Great Again. Happy coding!\n'\
 '# \n'\
@@ -132,3 +132,4 @@ RUN echo \
 >> /etc/motd.ecommpro
 
 COPY etc/zshrc /etc/zsh/zshrc
+COPY etc/zshenv /etc/zsh/zshenv

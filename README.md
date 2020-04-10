@@ -38,6 +38,8 @@ Two versions: FPM and CLI.
 
 Images (available from <https://hub.docker.com/u/ecommpro>):
 
+    ecommpro/php:7.4-fpm
+    ecommpro/php:7.5-cli
     ecommpro/php:7.3-fpm
     ecommpro/php:7.3-cli
     ecommpro/php:7.2-fpm
@@ -58,6 +60,7 @@ CLI Tools included:
     n98-magerun.phar
     n98-magerun2.phar
     wp-cli.phar
+    jq
 
 System packages included:
 
@@ -69,7 +72,7 @@ System packages included:
     msmtp
 
 ```
-docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.3-cli zsh
+docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.4-cli zsh
 ```
 
 Make PHP Great Again. Happy coding!
@@ -83,7 +86,7 @@ export SMTP_PASSWORD
 docker run -ti --rm \
     -e SMTP_PASSWORD \
     -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.3-cli zsh
+ecommpro/php:7.4-cli zsh
 ```
 
 And then, inside the container:
@@ -106,7 +109,7 @@ docker run -ti --rm \
     -v /dev/null:/usr/local/etc/php/conf.d/msmtp.ini
     -e SMTP_PASSWORD \
     -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.3-cli zsh
+ecommpro/php:7.4-cli zsh
 ```
 
 Example using SendGrid:
@@ -126,4 +129,17 @@ And then, inside the container:
 
 ```
 php -r 'mail("manel@ecomm.pro", "Hey, again (from SendGrid)!", "Come on, again (from SendGrid)!", "From: mysender@mydomain.tld");'
+```
+
+## Project and environment aware shell prompt
+
+By using the PRO_PRJ and PRO_ENV environment variables you can be aware of where you are:
+
+```
+docker run -e PRO_ENV=production -e PRO_PRJ=woolr -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.4-cli zsh
+```
+
+```
+production|woolr >  ~
+➜ 
 ```

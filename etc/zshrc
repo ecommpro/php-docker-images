@@ -17,10 +17,10 @@ function curenv {
 NEWLINE=$'\n'
 
 cat /etc/motd.ecommpro
-export HOME=/work
-export COMPOSER_HOME=/usr/local/share/composer
-export COMPOSER_CACHE_DIR=~/.local/composer/cache
-export PATH=$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export HOME=${HOME:-/work}
+export COMPOSER_HOME=${COMPOSER_HOME:-/usr/local/share/composer}
+export COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR:-~/.local/composer/cache}
+export PATH=${PATH:-$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}
 export ZSH=/usr/local/share/oh-my-zsh
 ZSH_THEME="robbyrussell"
 plugins=(
