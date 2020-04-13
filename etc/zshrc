@@ -17,7 +17,7 @@ function curenv {
 NEWLINE=$'\n'
 
 cat /etc/motd.ecommpro
-export HOME=${HOME:-/work}
+export HOME=${OVERRIDE_HOME:-/work}
 export COMPOSER_HOME=${COMPOSER_HOME:-/usr/local/share/composer}
 export COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR:-~/.local/composer/cache}
 export PATH=${PATH:-$HOME/.local/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}
@@ -26,7 +26,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
 )
-ZDOTDIR=/local
-HISTFILE=${ZDOTDIR}/.zsh_history
+#ZDOTDIR=/local
+#HISTFILE=${ZDOTDIR}/.zsh_history
 source $ZSH/oh-my-zsh.sh
 export PS1='$(curenv)%(?:%{%}>:%{%}>) %{$fg[cyan]%}%~%{$reset_color%}${NEWLINE}%{%}[%n@docker] ➜ $(git_prompt_info)'

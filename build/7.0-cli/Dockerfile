@@ -107,14 +107,6 @@ RUN git clone git://github.com/robbyrussell/oh-my-zsh.git /usr/local/share/oh-my
 
 COPY cli-tools /usr/local/bin
 
-RUN mkdir -p /usr/local/share/composer
-RUN COMPOSER_HOME=/usr/local/share/composer && ( \
-  composer global require hirak/prestissimo \
-  && composer clearcache \
-  && find /usr/local/share/composer -type d -exec chmod 777 {} \; \
-  && find /usr/local/share/composer -type f -exec chmod 666 {} \; \
-)
-
 RUN echo \
 '\n'\
 '# \n'\

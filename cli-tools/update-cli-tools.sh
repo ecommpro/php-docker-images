@@ -8,7 +8,7 @@ cd $TO
 
 # PHP tools
 
-curl -o composer.phar https://getcomposer.org/composer.phar \
+curl -o composer.phar https://getcomposer.org/composer-stable.phar \
     && chmod +x composer.phar \
     && ln -sf composer.phar composer
 
