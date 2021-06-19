@@ -1,10 +1,12 @@
 # EcommPro PHP Docker Images
 
-**NOTICE: dropped support for Alpine-based containers.**
+**NOTICE: 2021-06-19: set `main` as default branch**
+
+**NOTICE: 2021-06-19: dropped support for unmaintained PHP versions: 5.6, 7.0, 7.1 and 7.2**
 
 **NOTICE: tags ending with `-debian` will be deprecated. Please, use the `-fpm` and `-cli` ones (based on debian).**
 
-**NOTICE: 2021-06-19: dropped support for unmaintained PHP versions: 5.6, 7.0, 7.1 and 7.2**
+**NOTICE: dropped support for Alpine-based containers.**
 
 PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP Debian docker images.**
 
