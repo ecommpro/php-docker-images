@@ -30,3 +30,5 @@ plugins=(
 #HISTFILE=${ZDOTDIR}/.zsh_history
 source $ZSH/oh-my-zsh.sh
 export PS1='$(curenv)%(?:%{%}>:%{%}>) %{$fg[cyan]%}%~%{$reset_color%}${NEWLINE}%{%}[%n@docker] ➜ $(git_prompt_info)'
+
+alias composer='composer${COMPOSER_VERSION:-2}'

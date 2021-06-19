@@ -8,9 +8,14 @@ cd $TO
 
 # PHP tools
 
-curl -o composer.phar https://getcomposer.org/composer-stable.phar \
-    && chmod +x composer.phar \
-    && ln -sf composer.phar composer
+curl -o composer2.phar https://getcomposer.org/composer-stable.phar \
+    && chmod +x composer2.phar \
+    && ln -sf composer2.phar composer2
+
+curl -o composer1.phar https://getcomposer.org/composer-1.phar \
+    && chmod +x composer1.phar \
+    && ln -sf composer1.phar composer1
+
 
 # Magento 1.x tools
 

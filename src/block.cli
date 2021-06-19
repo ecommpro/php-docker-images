@@ -1,6 +1,6 @@
 ### CLI ###
 
-RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping procps && apt-get clean
+RUN apt-get update && apt-get install --no-install-recommends -y git zsh ssh vim bash mariadb-client unzip wget less iputils-ping procps && apt-get clean
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work
@@ -8,11 +8,12 @@ WORKDIR /work
 RUN git clone git://github.com/robbyrussell/oh-my-zsh.git /usr/local/share/oh-my-zsh
 
 COPY cli-tools /usr/local/bin
+COPY update-cli-tools.sh /usr/local/bin
 
 RUN echo \
 '\n'\
 '# \n'\
-'# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
+'# PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
 '# Based on the official php:<?= $version['version'] ?> docker image.\n'\
 '# \n'\
 '# Pre-built PHP extensions included: <?= implode(', ', array_keys($extensions)) ?>.\n'\

@@ -18,7 +18,7 @@ RUN set -ex \
 	&& apt-get --purge remove -y libmagickwand-dev \
 \
 && apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
-	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.3 \
+	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.4 \
 \
 && apt-get install --no-install-recommends -y libsodium23 libsodium-dev \
 	&& pecl install libsodium-2.0.21 \
@@ -51,6 +51,8 @@ RUN set -ex \
 	&& docker-php-ext-install zip \
 	&& apt-get --purge remove -y zlib1g-dev libzip-dev \
 \
+&& docker-php-ext-install pcntl \
+\
 && apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
 	&& pecl install geoip-1.1.1 \
 	&& docker-php-ext-enable geoip \
@@ -69,21 +71,11 @@ RUN set -ex \
 	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
-	mkdir -p /opt \
-	&& cd /opt \
-	&& git clone https://github.com/longxinH/xhprof.git \
-	&& mkdir -p /usr/src \
-	&& cd /usr/src \
-	&& git clone https://github.com/tideways/php-xhprof-extension.git \
-	&& cd php-xhprof-extension \
-	&& phpize \
-	&& ./configure --with-php-config=/usr/local/bin/php-config \
-	&& make \
-	&& make install \
-	&& docker-php-ext-enable tideways_xhprof \
+	pecl install xhprof \
+	&& docker-php-ext-enable xhprof \
 ) \
 \
-&& pecl install xdebug-2.9.0 && docker-php-ext-enable xdebug \
+&& pecl install xdebug-3.0.4 && docker-php-ext-enable xdebug \
 \
 && pecl install uopz-6.1.0 \
 && apt-get --purge remove -y git \
@@ -97,7 +89,7 @@ sendmail_path = "eval $SENDMAIL_COMMAND"\n'\
 
 ### CLI ###
 
-RUN apt-get update && apt-get install --no-install-recommends -y git zsh vim bash mariadb-client unzip wget less iputils-ping procps && apt-get clean
+RUN apt-get update && apt-get install --no-install-recommends -y git zsh ssh vim bash mariadb-client unzip wget less iputils-ping procps && apt-get clean
 
 RUN mkdir -p /work /local /opt/bin /etc/zsh && chmod 777 /work /local
 WORKDIR /work
@@ -105,16 +97,17 @@ WORKDIR /work
 RUN git clone git://github.com/robbyrussell/oh-my-zsh.git /usr/local/share/oh-my-zsh
 
 COPY cli-tools /usr/local/bin
+COPY update-cli-tools.sh /usr/local/bin
 
 RUN echo \
 '\n'\
 '# \n'\
-'# Welcome to the awesomic PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
+'# PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
 '# Based on the official php:7.4-cli docker image.\n'\
 '# \n'\
-'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
+'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, pcntl, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
 '# \n'\
-'# Tools included: composer.phar, jq, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
+'# Tools included: composer1.phar, composer2.phar, jq, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
 '# \n'\
 '# Make PHP Great Again. Happy coding!\n'\
 '# \n'\

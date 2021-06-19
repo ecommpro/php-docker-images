@@ -4,9 +4,11 @@
 
 **NOTICE: tags ending with `-debian` will be deprecated. Please, use the `-fpm` and `-cli` ones (based on debian).**
 
-Welcome to the awesomic PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP Debian docker images.**
+**NOTICE: 2021-06-19: dropped support for unmaintained PHP versions: 5.6, 7.0, 7.1 and 7.2**
 
-Ready to use with Magento, Magento 2, Wordpress and Laravel.
+PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP Debian docker images.**
+
+Ready to use with Magento, Magento 2, WordPress and Laravel.
 
 Pre-built PHP extensions:
 
@@ -38,18 +40,20 @@ Two versions: FPM and CLI.
 
 Images (available from <https://hub.docker.com/u/ecommpro>):
 
+    ecommpro/php:8.0-fpm
+    ecommpro/php:8.0-cli
     ecommpro/php:7.4-fpm
-    ecommpro/php:7.5-cli
+    ecommpro/php:7.4-cli
     ecommpro/php:7.3-fpm
     ecommpro/php:7.3-cli
-    ecommpro/php:7.2-fpm
-    ecommpro/php:7.2-cli
-    ecommpro/php:7.1-fpm
-    ecommpro/php:7.1-cli
-    ecommpro/php:7.0-fpm
-    ecommpro/php:7.0-cli
-    ecommpro/php:5.6-fpm
-    ecommpro/php:5.6-cli
+    ecommpro/php:7.2-fpm (deprecated)
+    ecommpro/php:7.2-cli (deprecated)
+    ecommpro/php:7.1-fpm (deprecated)
+    ecommpro/php:7.1-cli (deprecated)
+    ecommpro/php:7.0-fpm (deprecated)
+    ecommpro/php:7.0-cli (deprecated)
+    ecommpro/php:5.6-fpm (deprecated)
+    ecommpro/php:5.6-cli (deprecated)
 
 ## CLI
 

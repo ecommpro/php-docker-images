@@ -14,6 +14,7 @@ return [
     'redis',
     'memcached',
     'zip',
+    'pcntl',
     'geoip',
 
     'pdo_mysql',
