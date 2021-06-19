@@ -38,9 +38,9 @@ RUN set -ex \
 	&& docker-php-ext-install xsl \
 	&& apt-get --purge remove -y libxslt1-dev \
 \
-&& pecl install igbinary-3.0.1 && docker-php-ext-enable igbinary \
+&& pecl install igbinary-3.2.3 && docker-php-ext-enable igbinary \
 \
-&& printf "yes\nyes\n" | pecl install redis-5.0.1 && docker-php-ext-enable redis \
+&& printf "yes\nyes\n" | pecl install redis-5.3.4 && docker-php-ext-enable redis \
 \
 && apt-get install --no-install-recommends -y libmemcached11 libmemcachedutil2 zlib1g-dev libmemcached-dev \
 	&& printf "\n" | pecl install memcached \
