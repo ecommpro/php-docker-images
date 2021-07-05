@@ -64,7 +64,7 @@ RUN set -ex \
 	&& apt-get --purge remove -y librdkafka-dev \
 \
 && apt-get install --no-install-recommends -y libpq5 libpq-dev openssl libssl-dev \
-	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.4.3 \
+	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.6.7 \
 	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
