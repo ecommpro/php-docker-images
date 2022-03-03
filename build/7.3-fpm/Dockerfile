@@ -21,10 +21,10 @@ RUN set -ex \
 	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.4 \
 \
 && apt-get install --no-install-recommends -y libsodium23 libsodium-dev \
-	&& pecl install libsodium-2.0.21 \
+	&& pecl install libsodium-2.0.23 \
 	&& apt-get --purge remove -y libsodium-dev \
 \
-&& apt-get install --no-install-recommends -y libicu63 libicu-dev \
+&& apt-get install --no-install-recommends -y libicu67 libicu-dev \
 	&& docker-php-ext-install intl \
 	&& apt-get --purge remove -y libicu-dev \
 \
@@ -38,9 +38,9 @@ RUN set -ex \
 	&& docker-php-ext-install xsl \
 	&& apt-get --purge remove -y libxslt1-dev \
 \
-&& pecl install igbinary-3.2.3 && docker-php-ext-enable igbinary \
+&& pecl install igbinary && docker-php-ext-enable igbinary \
 \
-&& printf "yes\nyes\n" | pecl install redis-5.3.4 && docker-php-ext-enable redis \
+&& printf "yes\nyes\n" | pecl install redis && docker-php-ext-enable redis \
 \
 && apt-get install --no-install-recommends -y libmemcached11 libmemcachedutil2 zlib1g-dev libmemcached-dev \
 	&& printf "\n" | pecl install memcached \
@@ -54,7 +54,7 @@ RUN set -ex \
 && docker-php-ext-install pcntl \
 \
 && apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
-	&& pecl install geoip-1.1.1 \
+	&& pecl install geoip \
 	&& docker-php-ext-enable geoip \
 	&& apt-get --purge remove -y libgeoip-dev \
 \
@@ -63,11 +63,11 @@ RUN set -ex \
 && docker-php-ext-install mysqli \
 \
 && apt-get install --no-install-recommends -y librdkafka1 librdkafka-dev \
-	&& pecl install rdkafka-3.1.2 \
+	&& pecl install rdkafka \
 	&& apt-get --purge remove -y librdkafka-dev \
 \
 && apt-get install --no-install-recommends -y libpq5 libpq-dev openssl libssl-dev \
-	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole-4.6.7 \
+	&& printf "yes\nyes\nyes\nyes\nyes\n" | pecl install swoole \
 	&& apt-get --purge remove -y libpq-dev libssl-dev \
 \
 && (\
@@ -75,9 +75,9 @@ RUN set -ex \
 	&& docker-php-ext-enable xhprof \
 ) \
 \
-&& pecl install xdebug-3.0.4 && docker-php-ext-enable xdebug \
+&& pecl install xdebug && docker-php-ext-enable xdebug \
 \
-&& pecl install uopz-6.1.0 \
+&& pecl install uopz \
 && apt-get --purge remove -y git \
 && apt-get --purge autoremove -y \
 && apt-get clean \

@@ -1,4 +1,4 @@
-FROM php:7.3-cli
+FROM php:8.1-cli
 RUN set -ex \
 && apt-get update \
 && apt-get install --no-install-recommends -y git msmtp \
@@ -9,19 +9,16 @@ RUN set -ex \
 && docker-php-ext-install opcache \
 \
 && apt-get install --no-install-recommends -y libfreetype6 libfreetype6-dev libpng16-16 libpng-dev libjpeg62-turbo libjpeg62-turbo-dev libjpeg-dev \
-	&& docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd --enable-gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
 	&& docker-php-ext-install gd \
 	&& apt-get --purge remove -y libfreetype6-dev libpng-dev libjpeg62-turbo-dev libjpeg-dev \
 \
 && apt-get install --no-install-recommends -y imagemagick libmagickwand-dev \
-	&& pecl install imagick-3.4.4 \
+	&& pecl install imagick \
 	&& apt-get --purge remove -y libmagickwand-dev \
 \
-&& apt-get install --no-install-recommends -y libmcrypt4 libmcrypt-dev \
-	&& printf "\n" | pecl install channel://pecl.php.net/mcrypt-1.0.4 \
-\
 && apt-get install --no-install-recommends -y libsodium23 libsodium-dev \
-	&& pecl install libsodium-2.0.23 \
+	&& pecl install -f libsodium \
 	&& apt-get --purge remove -y libsodium-dev \
 \
 && apt-get install --no-install-recommends -y libicu67 libicu-dev \
@@ -53,10 +50,7 @@ RUN set -ex \
 \
 && docker-php-ext-install pcntl \
 \
-&& apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
-	&& pecl install geoip \
-	&& docker-php-ext-enable geoip \
-	&& apt-get --purge remove -y libgeoip-dev \
+&& true # DEPRECATED \
 \
 && docker-php-ext-install pdo_mysql \
 \
@@ -103,9 +97,9 @@ RUN echo \
 '\n'\
 '# \n'\
 '# PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
-'# Based on the official php:7.3-cli docker image.\n'\
+'# Based on the official php:8.1-cli docker image.\n'\
 '# \n'\
-'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, pcntl, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
+'# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, pcntl, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
 '# \n'\
 '# Tools included: composer1.phar, composer2.phar, jq, modman, n98-magerun.phar, n98-magerun2.phar, wp-cli.phar.\n'\
 '# \n'\

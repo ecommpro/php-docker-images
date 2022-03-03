@@ -3,10 +3,8 @@ return [
 
     // NOT READY
 
-    /*
     [ 'version' => '8.1-cli', ],
     [ 'version' => '8.1-fpm', ],
-    */
 
     // MAINTAINED
 

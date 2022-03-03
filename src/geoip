@@ -1,4 +1,4 @@
 apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
-	&& pecl install geoip-1.1.1 \
+	&& pecl install geoip \
 	&& docker-php-ext-enable geoip \
 	&& apt-get --purge remove -y libgeoip-dev
