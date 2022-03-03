@@ -54,7 +54,7 @@ RUN set -ex \
 && docker-php-ext-install pcntl \
 \
 && apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
-	&& pecl install geoip \
+	&& pecl install geoip-1.1.1 \
 	&& docker-php-ext-enable geoip \
 	&& apt-get --purge remove -y libgeoip-dev \
 \
@@ -77,7 +77,7 @@ RUN set -ex \
 \
 && pecl install xdebug && docker-php-ext-enable xdebug \
 \
-&& pecl install uopz \
+&& pecl install uopz-6.1.2 \
 && apt-get --purge remove -y git \
 && apt-get --purge autoremove -y \
 && apt-get clean \
@@ -102,7 +102,7 @@ COPY update-cli-tools.sh /usr/local/bin
 RUN echo \
 '\n'\
 '# \n'\
-'# PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
+'# PHP-CLI docker image by [Admibox](https://admibox.com/) | @getadmibox | <dev@admibox.com>.\n'\
 '# Based on the official php:7.3-cli docker image.\n'\
 '# \n'\
 '# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, pcntl, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
@@ -111,10 +111,10 @@ RUN echo \
 '# \n'\
 '# Make PHP Great Again. Happy coding!\n'\
 '# \n'\
-'# Check <https://github.com/ecommpro/php-docker-images/blob/master/README.md> for more information.\n'\
+'# Check <https://github.com/admibox/php-docker-images/blob/master/README.md> for more information.\n'\
 '# \n'\
 ''\
->> /etc/motd.ecommpro
+>> /etc/motd.admibox
 
 COPY etc/zshrc /etc/zsh/zshrc
 COPY etc/zshenv /etc/zsh/zshenv

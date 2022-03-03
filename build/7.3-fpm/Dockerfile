@@ -54,7 +54,7 @@ RUN set -ex \
 && docker-php-ext-install pcntl \
 \
 && apt-get install --no-install-recommends -y libgeoip1 libgeoip-dev \
-	&& pecl install geoip \
+	&& pecl install geoip-1.1.1 \
 	&& docker-php-ext-enable geoip \
 	&& apt-get --purge remove -y libgeoip-dev \
 \
@@ -77,7 +77,7 @@ RUN set -ex \
 \
 && pecl install xdebug && docker-php-ext-enable xdebug \
 \
-&& pecl install uopz \
+&& pecl install uopz-6.1.2 \
 && apt-get --purge remove -y git \
 && apt-get --purge autoremove -y \
 && apt-get clean \

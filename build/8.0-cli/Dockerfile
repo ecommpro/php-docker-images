@@ -99,7 +99,7 @@ COPY update-cli-tools.sh /usr/local/bin
 RUN echo \
 '\n'\
 '# \n'\
-'# PHP-CLI docker image by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>.\n'\
+'# PHP-CLI docker image by [Admibox](https://admibox.com/) | @getadmibox | <dev@admibox.com>.\n'\
 '# Based on the official php:8.0-cli docker image.\n'\
 '# \n'\
 '# Pre-built PHP extensions included: bcmath, sockets, opcache, gd, imagick, mcrypt, libsodium, intl, xmlrw, xsl, igbinary, redis, memcached, zip, pcntl, geoip, pdo_mysql, mysqli, rdkafka, swoole, xhprof, xdebug, uopz.\n'\
@@ -108,10 +108,10 @@ RUN echo \
 '# \n'\
 '# Make PHP Great Again. Happy coding!\n'\
 '# \n'\
-'# Check <https://github.com/ecommpro/php-docker-images/blob/master/README.md> for more information.\n'\
+'# Check <https://github.com/admibox/php-docker-images/blob/master/README.md> for more information.\n'\
 '# \n'\
 ''\
->> /etc/motd.ecommpro
+>> /etc/motd.admibox
 
 COPY etc/zshrc /etc/zsh/zshrc
 COPY etc/zshenv /etc/zsh/zshenv

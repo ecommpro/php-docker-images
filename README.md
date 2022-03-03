@@ -1,4 +1,6 @@
-# EcommPro PHP Docker Images
+# Admibox PHP Docker Images
+
+**NOTICE: 2022-03-03: Add support for PHP 8.1 and rebrand from EcommPro to Admibox**
 
 **NOTICE: 2021-06-19: set `main` as default branch**
 
@@ -8,9 +10,9 @@
 
 **NOTICE: dropped support for Alpine-based containers.**
 
-PHP docker images by [EcommPro SL](https://ecomm.pro/) | @ecommprohq | <dev@ecomm.pro>. **Based on the official PHP Debian docker images.**
+PHP docker images by [Admibox SL](https://admibox.com/) | @getadmibox | <dev@admibox.com>. **Based on the official PHP Debian docker images.**
 
-Ready to use with Magento, Magento 2, WordPress and Laravel.
+Ready to use with Laravel, Magento 1/2 and Wordpress.
 
 Pre-built PHP extensions:
 
@@ -40,22 +42,16 @@ Pre-built PHP extensions:
 
 Two versions: FPM and CLI.
 
-Images (available from <https://hub.docker.com/u/ecommpro>):
+Images (available from <https://hub.docker.com/u/admibox>):
 
-    ecommpro/php:8.0-fpm
-    ecommpro/php:8.0-cli
-    ecommpro/php:7.4-fpm
-    ecommpro/php:7.4-cli
-    ecommpro/php:7.3-fpm
-    ecommpro/php:7.3-cli
-    ecommpro/php:7.2-fpm (deprecated)
-    ecommpro/php:7.2-cli (deprecated)
-    ecommpro/php:7.1-fpm (deprecated)
-    ecommpro/php:7.1-cli (deprecated)
-    ecommpro/php:7.0-fpm (deprecated)
-    ecommpro/php:7.0-cli (deprecated)
-    ecommpro/php:5.6-fpm (deprecated)
-    ecommpro/php:5.6-cli (deprecated)
+    admibox/php:8.1-fpm
+    admibox/php:8.1-cli
+    admibox/php:8.0-fpm
+    admibox/php:8.0-cli
+    admibox/php:7.4-fpm
+    admibox/php:7.4-cli
+    admibox/php:7.3-fpm
+    admibox/php:7.3-cli
 
 ## CLI
 
@@ -78,7 +74,7 @@ System packages included:
     msmtp
 
 ```
-docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.4-cli zsh
+docker run -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work admibox/php:7.4-cli zsh
 ```
 
 Make PHP Great Again. Happy coding!
@@ -91,14 +87,14 @@ export SMTP_PASSWORD
 
 docker run -ti --rm \
     -e SMTP_PASSWORD \
-    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.4-cli zsh
+    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=mailer.admibox.com --protocol=smtp --auth=on --user=mta@admibox.com --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
+admibox/php:7.4-cli zsh
 ```
 
-And then, inside the container:
+And then, from container shell:
 
 ```
-php -r 'mail("manel@ecomm.pro", "Hey, again!", "Come on, again!", "From: hello@ecomm.pro");'
+php -r 'mail("manel@admibox.com", "Hey, again!", "Come on, again!", "From: hello@admibox.com");'
 ```
 
 Et voilà.
@@ -114,8 +110,8 @@ sendmail_path = "eval $SENDMAIL_COMMAND"
 docker run -ti --rm \
     -v /dev/null:/usr/local/etc/php/conf.d/msmtp.ini
     -e SMTP_PASSWORD \
-    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=main.mailer.ecomm.pro --protocol=smtp --auth=on --user=mta@ecomm.pro --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.4-cli zsh
+    -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=mailer.admibox.com --protocol=smtp --auth=on --user=mta@admibox.com --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
+admibox/php:7.4-cli zsh
 ```
 
 Example using SendGrid:
@@ -128,13 +124,13 @@ docker run -ti --rm \
     -v /dev/null:/usr/local/etc/php/conf.d/msmtp.ini
     -e SMTP_PASSWORD \
     -e SENDMAIL_COMMAND='msmtp --tls=on --tls-starttls=off --tls-trust-file=/etc/ssl/certs/ca-certificates.crt --host=smtp.sendgrid.net --protocol=smtp --auth=on --user=apikey --passwordeval="printf \"%s\n\" \"$SMTP_PASSWORD\"" --port=465 --read-envelope-from -t' \
-ecommpro/php:7.4-cli zsh
+admibox/php:7.4-cli zsh
 ```
 
-And then, inside the container:
+And then, from container shell:
 
 ```
-php -r 'mail("manel@ecomm.pro", "Hey, again (from SendGrid)!", "Come on, again (from SendGrid)!", "From: mysender@mydomain.tld");'
+php -r 'mail("manel@admibox.com", "Hey, again (from SendGrid)!", "Come on, again (from SendGrid)!", "From: mysender@mydomain.tld");'
 ```
 
 ## Project and environment aware shell prompt
@@ -142,10 +138,10 @@ php -r 'mail("manel@ecomm.pro", "Hey, again (from SendGrid)!", "Come on, again (
 By using the PRO_PRJ and PRO_ENV environment variables you can be aware of where you are:
 
 ```
-docker run -e PRO_ENV=production -e PRO_PRJ=woolr -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work ecommpro/php:7.4-cli zsh
+docker run -e PRO_ENV=production -e PRO_PRJ=satspal -u $(id -u):$(id -g) -ti --rm -v $(pwd):/work admibox/php:7.4-cli zsh
 ```
 
 ```
-production|woolr >  ~
+production|satspal >  ~
 ➜ 
 ```

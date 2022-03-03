@@ -16,7 +16,7 @@ function curenv {
 
 NEWLINE=$'\n'
 
-cat /etc/motd.ecommpro
+cat /etc/motd.admibox
 export HOME=${OVERRIDE_HOME:-/work}
 export COMPOSER_HOME=${COMPOSER_HOME:-/usr/local/share/composer}
 export COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR:-~/.local/composer/cache}
